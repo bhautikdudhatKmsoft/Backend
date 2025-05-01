@@ -10,7 +10,8 @@ exports.addProduct = async(req,res) => {
         }
 
         if(req.file) {
-            req.body.image = req.file.path
+            // req.body.image = req.file.path // store in folder
+            // req.body.image = req.file.buffer  // store with buffer
         }
         
         product = await productServices.addProduct({...req.body});
