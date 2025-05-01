@@ -1,0 +1,10 @@
+TASK
+
+1. create a node project in crud
+2. create user authentication 
+3. add feacher to add product
+4. add feacher to add cart
+5. add feacher to add review 
+6. add feacher to do order
+7. add feacher to upload image add add product
+8. upload image without store in any folder (store like buffer)
