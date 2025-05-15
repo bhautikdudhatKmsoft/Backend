@@ -1,28 +1,56 @@
 const ProductServices = require('../services/product.service');
 const productServices = new ProductServices();
 
-exports.addProduct = async(req,res) => {
-    try {
-        let product = await productServices.getProduct({name : req.body.name});
+// exports.addProduct = async(req,res) => {
+//     try {
+//         let product = await productServices.getProduct({name : req.body.name});
 
-        if(product) {
-            return res.status(400).json({message : `Product already found `})
-        }
+//         if(product) {
+//             return res.status(400).json({message : `Product already found `})
+//         }
 
-        if(req.file) {
-            // req.body.image = req.file.path // store in folder
-            // req.body.image = req.file.buffer  // store with buffer
-        }
+//         if(req.file) {
+//             req.body.image = req.file.path // store in folder
+//             // req.body.image = req.file.buffer  // store with buffer
+//         }
         
-        product = await productServices.addProduct({...req.body});
+//         product = await productServices.addProduct({...req.body});
 
-        res.status(201).json({product,message : `Product added successfully..........`});
+//         res.status(201).json({product,message : `Product added successfully..........`});
+
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({message : `Internal server error...${console.error()}`});
+//     }
+// };
+
+exports.addProduct = async (req, res) => {
+    try {
+        let product = await productServices.getProduct({ name: req.body.name });
+
+        if (product) {
+            return res.status(400).json({ message: `Product already found` });
+        }
+
+        // Handle file uploads
+        if (req.files?.image?.length > 0) {
+            req.body.image = req.files.image[0].path;
+        }
+
+        if (req.files?.sideImages?.length > 0) {
+            req.body.sideImages = req.files.sideImages.map(file => file.path);
+        }
+
+        product = await productServices.addProduct({ ...req.body });
+
+        res.status(201).json({ product, message: `Product added successfully.` });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({message : `Internal server error...${console.error()}`});
+        res.status(500).json({ message: `Internal server error...${error.message}` });
     }
 };
+
 
 exports.getProduct = async(req,res) => {
     try {

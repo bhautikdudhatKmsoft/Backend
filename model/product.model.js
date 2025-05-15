@@ -22,6 +22,11 @@ const productSchema = mongoose.Schema({
         required : true
     },
 
+    sideImages : {
+        type : [String],
+        default : []
+    },
+
     isDelete : {
         type : Boolean,
         default : false

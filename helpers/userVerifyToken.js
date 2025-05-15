@@ -10,7 +10,7 @@ exports.userVerifyToken = async(req,res,next) => {
         }
 
         let token = await authorization.split(" ")[1];
-        console.log(token);
+        // console.log(token);
 
         if(token === undefined) {
             return res.status(401).json({message : `Invalid authorization.....`});
